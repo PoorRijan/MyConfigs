@@ -134,7 +134,6 @@
     "electron-27.3.11"
   ];
 
-  
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.rijan = {
     isNormalUser = true;
@@ -142,51 +141,37 @@
     extraGroups = [ "networkmanager" "wheel"];
     packages = with pkgs;
     let
+      my_R_packages_list = with rPackages; [
+        tidyverse
+        rPackages.languageserver
+        bslib
+        ggplot2
+        DT
+        ggpubr
+        shinyFiles
+        bigsnpr
+        ggExtra
+        plotly
+        shiny
+        ape
+        data_table
+        ggtree
+        devtools
+        igraph
+        dplyr
+        argparse
+        rPackages.IRkernel
+        shinyBS
+        rlang
+        svglite
+        phylotools
+      ];
+      
       RStudio-with-my-packages = rstudioWrapper.override{
-        packages = with rPackages; [ 
-          ggplot2
-          ggtree
-          devtools
-          igraph
-          ggpubr
-          dplyr
-          shiny
-          tidyverse
-          bigsnpr
-          data_table
-          bslib
-          svglite
-          ggExtra
-          ape
-          phylotools
-          argparse
-          plotly
-          DT
-          rlang
-          shinyFiles
-          shinyBS
-          rPackages.IRkernel
-          rPackages.languageserver
-          ];
+        packages = my_R_packages_list;
       };
       R-with-my-packages = rWrapper.override{
-        packages = with rPackages; [ 
-          ggplot2
-          ggpubr
-          devtools
-          dplyr
-          shiny
-          plotly
-          tidyverse
-          data_table
-          bslib
-          svglite
-          ggExtra
-          argparse
-          ggtree
-          rPackages.IRkernel
-          rPackages.languageserver
-          ];
+        packages = my_R_packages_list;
       };
       python-with-my-packages = python3.withPackages (ps: with ps; [
         numpy
@@ -215,114 +200,114 @@
       ]);
     in
      [
-      sqlite-interactive
-      zed-editor
-      yt-dlp
-      clementine
-      ripgrep
-      duckdb
-      inetutils
-      vlc
-      tesseract4
-      ytdownloader
-      plink-ng
-      bcftools
-      spotube
-      samba4Full
-      gnome-podcasts
-      wget
-      mailspring
-      awscli2
-      neovim
-      valgrind
-      obs-studio
-      sox
-      gdb
-      pandoc
-      authenticator
       anki-bin
-      postgresql_16
+      atuin
+      authenticator
+      autoconf269
+      automake115x
+      awscli2
       backblaze-b2
-      xlsx2csv
-      mercurial
-      dart
-      flutter
-      protonvpn-gui
-      libreoffice
-      firefox
-      unzip
-      glibc
-      nimble
-      c2nim
-      libgcc
+      bcftools
+      beeper
+      brave
       bzip2
-      xz
+      c2nim
+      calibre
+      canon-cups-ufr2
+      cargo
+      clementine
+      dart
+      duckdb
+      emacs
+      firefox
+      fish
+      flutter
+      fzf
       gccgo13
-      syncthing
+      gdb
+      gimp
+      git
+      glab
+      glibc
+      gnome-podcasts
       gnumake42
+      helix
+      htslib
+      hugo
+      inetutils
+      inkscape
+      jdk17
+      jellyfin-ffmpeg
+      joplin-desktop
+      julia
+      kbfs
+      keybase
+      kitty
+      lazygit
+      libgcc
+      libreoffice
+      logseq
+      mailspring
+      mercurial
+      mosh
+      ncurses
+      neovim
+      nim
+      nimble
+      nodePackages_latest.wrangler
+      notcurses
+      obs-studio
+      onedriver
+      openconnect
+      openconnect
+      pandoc
+      perl
+      plink-ng
+      postgresql_16
+      protonvpn-gui
+      python-with-my-packages
+      R-with-my-packages
+      rclone
+      ripcord
+      ripgrep
+      RStudio-with-my-packages
+      rustc
+      samba4Full
+      sioyek
+      sox
+      spotify
+      spotube
+      spyder
+      sqlite-interactive
+      stow
+      syncthing
+      tangram
+      tesseract4
+      the-way
+      thunderbird
+      tor-browser
+      typst
+      unzip
+      valgrind
+      vcftools
+      vlc
+      vscode-fhs
+      waydroid
+      wget
+      xclip
+      xlsx2csv
+      xz
+      yazi
+      yt-dlp
+      yt-dlp
+      ytdownloader
+      zed-editor
+      zellij
+      zig
       zlib
       zlib.dev
-      automake115x
-      autoconf269
-      xclip
-      yt-dlp
-      thunderbird
       zoom-us
-      ncurses
-      notcurses
-	    helix
-	    brave
-	    emacs
-	    fish
-      mosh
-      inkscape
-	    kitty
-      zellij
-      vcftools
-      zig
-      julia
-      yazi
-      nodePackages_latest.wrangler
-      R-with-my-packages
-      RStudio-with-my-packages
-      python-with-my-packages
-      spyder
-      openconnect
-      htslib
-      sioyek
-      tor-browser
-      nim
-      hugo
-      rustc
-      cargo
-      git
-      fzf
-      glab
-      atuin
-      the-way
-      stow
-      typst
-      openconnect
-      vscode-fhs
-      ripcord
-      rclone
-      onedriver
-      keybase
-      kbfs
       zotero
-      joplin-desktop
-      logseq
-      calibre
-      gimp
-      jellyfin-ffmpeg
-      jdk17
-      waydroid
-      perl
-      spotify
-      canon-cups-ufr2
-      tangram
-      lazygit
-      beeper
     ];
   };
 
