@@ -101,9 +101,8 @@
   };
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
+
   # This is for kbfs
-  #services.keybase.enable = true;
-  #services.kbfs.enable = true;
   # Enable basic Keybase and KBFS services
   services.keybase.enable = true;
   services.kbfs.enable = true;
@@ -162,6 +161,7 @@
         argparse
         rPackages.IRkernel
         shinyBS
+        reactlog
         rlang
         svglite
         phylotools
@@ -177,16 +177,16 @@
         numpy
         pandas
         matplotlib
+        spyder
+        spyder-kernels
         python312Packages.psycopg2
         python312Packages.pyarrow
         python312Packages.marimo
         python312Packages.duckdb
-        python312Packages.spyder-kernels
         python312Packages.pysam
         python312Packages.ipykernel
         python312Packages.jupyterlab
         python312Packages.polars
-        python312Packages.spyder-kernels
         python312Packages.qtconsole
         python312Packages.newick
         python312Packages.ete3
@@ -225,6 +225,7 @@
       fzf
       gccgo13
       gdb
+      ghostty
       gimp
       git
       glab
@@ -277,7 +278,6 @@
       sox
       spotify
       spotube
-      spyder
       sqlite-interactive
       stow
       syncthing
@@ -325,7 +325,7 @@
   #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
   #  wget
   ];
-
+  
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
