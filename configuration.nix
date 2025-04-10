@@ -6,12 +6,16 @@
 
 { config, pkgs, ... }:
 
+let
+  home-manager = builtins.fetchTarball https://github.com/nix-community/home-manager/archive/release-24.11.tar.gz;
+in
 {
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       /home/rijan/myflakes/plink2.nix
       /home/rijan/myflakes/snpeff.nix
+      (import "${home-manager}/nixos")
     ];
 
   # Bootloader.
@@ -101,7 +105,7 @@
   };
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
-
+  
   # This is for kbfs
   # Enable basic Keybase and KBFS services
   services.keybase.enable = true;
@@ -129,16 +133,13 @@
     host    all             all             ::1/128                 trust
     '';
   
-  nixpkgs.config.permittedInsecurePackages = [
-    "electron-27.3.11"
-  ];
-
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.rijan = {
-    isNormalUser = true;
-    description = "rijan";
+    isNormalUser = true;    
     extraGroups = [ "networkmanager" "wheel"];
-    packages = with pkgs;
+  };
+  home-manager.users.rijan = {pkgs, ...}: {
+    home.packages = with pkgs;
     let
       my_R_packages_list = with rPackages; [
         tidyverse
@@ -216,7 +217,6 @@
       canon-cups-ufr2
       cargo
       clementine
-      dart
       duckdb
       emacs
       firefox
@@ -260,7 +260,6 @@
       obs-studio
       onedriver
       openconnect
-      openconnect
       pandoc
       perl
       plink-ng
@@ -295,10 +294,8 @@
       waydroid
       wget
       xclip
-      xlsx2csv
       xz
       yazi
-      yt-dlp
       yt-dlp
       ytdownloader
       zed-editor
@@ -309,15 +306,29 @@
       zoom-us
       zotero
     ];
+
+    programs.atuin = {
+      enable = true;
+      enableFishIntegration = true;
+    };
+
+    nixpkgs.config.permittedInsecurePackages = [
+      "electron-27.3.11"
+    ];
+    # this should enable zsh as the default shell
+    
+    # Allow unfree packages
+    nixpkgs.config.allowUnfree = true;
+
+    home.stateVersion = "24.11";
   };
 
-  # this should enable zsh as the default shell
   programs.fish.enable = true;
+  # this should enable zsh as the default shell
+  users.users.rijan.shell = pkgs.fish;
   # this shoule make zsh the default shell
-  users.defaultUserShell = pkgs.fish;
-  
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
+  users.users.rijan.useDefaultShell = true;
+
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -351,6 +362,6 @@
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "24.05"; # Did you read the comment?
 
+  system.stateVersion = "24.11";
 }
